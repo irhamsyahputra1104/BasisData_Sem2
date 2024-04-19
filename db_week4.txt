@@ -1,0 +1,193 @@
+
+Setting environment for using XAMPP for Windows.
+irham@DESKTOP-2AJMV4K c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbti08             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE dbti08;
+Database changed
+MariaDB [dbti08]> SHOW TABLES;
++------------------+
+| Tables_in_dbti08 |
++------------------+
+| barang           |
+| jenis            |
++------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> DESC jenis;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.027 sec)
+
+MariaDB [dbti08]> DESC barang;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode    | char(5)     | NO   | UNI | NULL    |                |
+| nama    | varchar(30) | NO   |     | NULL    |                |
+| harga   | double      | NO   |     | NULL    |                |
+| stok    | int(11)     | NO   |     | NULL    |                |
+| idjenis | int(11)     | YES  |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+7 rows in set (0.020 sec)
+
+MariaDB [dbti08]> SELECT * FROM jenis;
+Empty set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
+Empty set (0.001 sec)
+
+MariaDB [dbti08]> INSERT INTO jenis VALUES
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [dbti08]> INSERT INTO jenis (nama) VALUES
+    -> ('Elektronik'),('Furniture'),('Makanan'),('Minuman');
+Query OK, 4 rows affected (0.018 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> SELECT * FROM jenis;
++----+------------+
+| id | nama       |
++----+------------+
+|  1 | Elektronik |
+|  2 | Furniture  |
+|  3 | Makanan    |
+|  4 | Minuman    |
++----+------------+
+4 rows in set (0.001 sec)
+
+MariaDB [dbti08]> DESC barang;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode    | char(5)     | NO   | UNI | NULL    |                |
+| nama    | varchar(30) | NO   |     | NULL    |                |
+| harga   | double      | NO   |     | NULL    |                |
+| stok    | int(11)     | NO   |     | NULL    |                |
+| idjenis | int(11)     | YES  |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+7 rows in set (0.027 sec)
+
+MariaDB [dbti08]> INSERT INTO barang (kode,nama,harga,stok,idjenis,foto) VALUES
+    -> ('KL001','Kulkas LG 14 Pintu',7000000,2,1,'Kulkas.jpg');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+--------------------+---------+------+---------+------------+
+| id | kode  | nama               | harga   | stok | idjenis | foto       |
++----+-------+--------------------+---------+------+---------+------------+
+|  1 | KL001 | Kulkas LG 14 Pintu | 7000000 |    2 |       1 | Kulkas.jpg |
++----+-------+--------------------+---------+------+---------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> INSERT INTO barang (kode,nama,harga,stok,idjenis,foto) VALUES
+    -> ('LM002','Lemari Baju',1000000,5,2,'Lemari.jpg'),
+    -> ('LP001','Laptop ASUS 14 Inch',6000000,10,1,'asus.jpg');
+Query OK, 2 rows affected (0.018 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+---------------------+---------+------+---------+------------+
+| id | kode  | nama                | harga   | stok | idjenis | foto       |
++----+-------+---------------------+---------+------+---------+------------+
+|  1 | KL001 | Kulkas LG 14 Pintu  | 7000000 |    2 |       1 | Kulkas.jpg |
+|  2 | LM002 | Lemari Baju         | 1000000 |    5 |       2 | Lemari.jpg |
+|  3 | LP001 | Laptop ASUS 14 Inch | 6000000 |   10 |       1 | asus.jpg   |
++----+-------+---------------------+---------+------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbti08]> INSERT INTO barang (kode,nama,harga,stok,idjenis,foto) VALUES
+    -> ('BS008','Basreng',10000,100,3,'basreng.jpg'),
+    -> ('FT002','Fanta',8000,200,4,'fanta.jpg');
+Query OK, 2 rows affected (0.019 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+---------------------+---------+------+---------+-------------+
+| id | kode  | nama                | harga   | stok | idjenis | foto        |
++----+-------+---------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu  | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju         | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop ASUS 14 Inch | 6000000 |   10 |       1 | asus.jpg    |
+|  4 | BS008 | Basreng             |   10000 |  100 |       3 | basreng.jpg |
+|  5 | FT002 | Fanta               |    8000 |  200 |       4 | fanta.jpg   |
++----+-------+---------------------+---------+------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> UPDATE barang SET nama='Laptop Lenovo 10 Inch',harga=4000000,idjenis=4,stok=2000 WHERE id=3;
+Query OK, 1 row affected (0.005 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  5 | FT002 | Fanta                 |    8000 |  200 |       4 | fanta.jpg   |
++----+-------+-----------------------+---------+------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> DELETE FROM barang WHERE id=5;
+Query OK, 1 row affected (0.018 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
++----+-------+-----------------------+---------+------+---------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [dbti08]> INSERT INTO barang (kode,nama,harga,stok,idjenis,foto) VALUES
+    -> ('SB001','Seblak',15000,2,4,'seblak.jpg');
+Query OK, 1 row affected (0.018 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]>
