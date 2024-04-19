@@ -1,0 +1,189 @@
+Setting environment for using XAMPP for Windows.
+irham@DESKTOP-2AJMV4K c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| dbti08             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE dbti08;
+Database changed
+MariaDB [dbti08]> SHOW TABLES;
+Empty set (0.001 sec)
+
+MariaDB [dbti08]> CREATE TABLE jenis(
+    -> id int primary key auto_increment not null,
+    -> nama varchar(30) not null unique);
+Query OK, 0 rows affected (0.063 sec)
+
+MariaDB [dbti08]> SHOW TABLES;
++------------------+
+| Tables_in_dbti08 |
++------------------+
+| jenis            |
++------------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> DESC jenis;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.026 sec)
+
+MariaDB [dbti08]> CREATE TABLE produk(
+    ->     -> id int primary key auto_increment not null,
+    ->     -> kode char(5) not null unique,
+    ->     -> nama varchar(30) not null,
+    ->     -> harga double not null,
+    ->     -> stok int not null,
+    ->     -> idjenis int references jenis(id),
+    ->     -> foto varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-> id int primary key auto_increment not null,
+    -> kode char(5) not null u...' at line 2
+MariaDB [dbti08]> CREATE TABLE produk(
+    -> id int primary key auto_increment not null,
+    -> kode char(5) not null unique,
+    -> nama varchar(30) not null,
+    -> harga double not null,
+    -> stok int not null,
+    -> idjenis int references jenis(id),
+    -> foto varchar(30));
+Query OK, 0 rows affected (0.069 sec)
+
+MariaDB [dbti08]> DESC produk;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode    | char(5)     | NO   | UNI | NULL    |                |
+| nama    | varchar(30) | NO   |     | NULL    |                |
+| harga   | double      | NO   |     | NULL    |                |
+| stok    | int(11)     | NO   |     | NULL    |                |
+| idjenis | int(11)     | YES  |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+7 rows in set (0.028 sec)
+
+MariaDB [dbti08]> ALTER TABLE produk ADD COLUMN deskripsi varchar(255) AFTER idjenis;
+Query OK, 0 rows affected (0.031 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> DESC produk;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| kode      | char(5)      | NO   | UNI | NULL    |                |
+| nama      | varchar(30)  | NO   |     | NULL    |                |
+| harga     | double       | NO   |     | NULL    |                |
+| stok      | int(11)      | NO   |     | NULL    |                |
+| idjenis   | int(11)      | YES  |     | NULL    |                |
+| deskripsi | varchar(255) | YES  |     | NULL    |                |
+| foto      | varchar(30)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+8 rows in set (0.027 sec)
+
+MariaDB [dbti08]> ALTER TABLE produk CHANGE deskripsi keterangan varchar(1000) not null unique;
+Query OK, 0 rows affected (0.118 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> DESC produk;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| id         | int(11)       | NO   | PRI | NULL    | auto_increment |
+| kode       | char(5)       | NO   | UNI | NULL    |                |
+| nama       | varchar(30)   | NO   |     | NULL    |                |
+| harga      | double        | NO   |     | NULL    |                |
+| stok       | int(11)       | NO   |     | NULL    |                |
+| idjenis    | int(11)       | YES  |     | NULL    |                |
+| keterangan | varchar(1000) | NO   | UNI | NULL    |                |
+| foto       | varchar(30)   | YES  |     | NULL    |                |
++------------+---------------+------+-----+---------+----------------+
+8 rows in set (0.030 sec)
+
+MariaDB [dbti08]> ALTER TABLE produk MODIFY keterangan float;
+Query OK, 0 rows affected (0.120 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> DESC produk;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode       | char(5)     | NO   | UNI | NULL    |                |
+| nama       | varchar(30) | NO   |     | NULL    |                |
+| harga      | double      | NO   |     | NULL    |                |
+| stok       | int(11)     | NO   |     | NULL    |                |
+| idjenis    | int(11)     | YES  |     | NULL    |                |
+| keterangan | float       | YES  | UNI | NULL    |                |
+| foto       | varchar(30) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.073 sec)
+
+MariaDB [dbti08]> ALTER TABLE produk DROP COLUMN keterangan;
+Query OK, 0 rows affected (0.053 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbti08]> DESC produk;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode    | char(5)     | NO   | UNI | NULL    |                |
+| nama    | varchar(30) | NO   |     | NULL    |                |
+| harga   | double      | NO   |     | NULL    |                |
+| stok    | int(11)     | NO   |     | NULL    |                |
+| idjenis | int(11)     | YES  |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+7 rows in set (0.025 sec)
+
+MariaDB [dbti08]> SHOW TABLES;
++------------------+
+| Tables_in_dbti08 |
++------------------+
+| jenis            |
+| produk           |
++------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> ALTER TABLE produk RENAME TO barang;
+Query OK, 0 rows affected (0.055 sec)
+
+MariaDB [dbti08]> DESC barang;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode    | char(5)     | NO   | UNI | NULL    |                |
+| nama    | varchar(30) | NO   |     | NULL    |                |
+| harga   | double      | NO   |     | NULL    |                |
+| stok    | int(11)     | NO   |     | NULL    |                |
+| idjenis | int(11)     | YES  |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+7 rows in set (0.027 sec)
+
+MariaDB [dbti08]>
