@@ -1,0 +1,370 @@
+irham@DESKTOP-2AJMV4K c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 12
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbti08             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE dbti08;
+Database changed
+MariaDB [dbti08]> SHOW TABLES;
++------------------+
+| Tables_in_dbti08 |
++------------------+
+| barang           |
+| jenis            |
++------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> DESC  barang;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| kode    | char(5)     | NO   | UNI | NULL    |                |
+| nama    | varchar(30) | NO   |     | NULL    |                |
+| harga   | double      | NO   |     | NULL    |                |
+| stok    | int(11)     | NO   |     | NULL    |                |
+| idjenis | int(11)     | YES  |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+7 rows in set (0.028 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT nama,stok,kode FROM barang;
++-----------------------+------+-------+
+| nama                  | stok | kode  |
++-----------------------+------+-------+
+| Kulkas LG 14 Pintu    |    2 | KL001 |
+| Lemari Baju           |    5 | LM002 |
+| Laptop Lenovo 10 Inch | 2000 | LP001 |
+| Basreng               |  100 | BS008 |
+| Seblak                |    2 | SB001 |
++-----------------------+------+-------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE harga >= 1000000;
++----+-------+-----------------------+---------+------+---------+------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto       |
++----+-------+-----------------------+---------+------+---------+------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg   |
++----+-------+-----------------------+---------+------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> INSERT INTO barang (kode,nama,harga,stok,idjenis,foto) VALUES
+    -> ('ES001','Es Te Manis',50000,5,4,'esteh.jpg');
+Query OK, 1 row affected (0.019 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE stok=5;
++----+-------+-------------+---------+------+---------+------------+
+| id | kode  | nama        | harga   | stok | idjenis | foto       |
++----+-------+-------------+---------+------+---------+------------+
+|  2 | LM002 | Lemari Baju | 1000000 |    5 |       2 | Lemari.jpg |
+|  7 | ES001 | Es Te Manis |   50000 |    5 |       4 | esteh.jpg  |
++----+-------+-------------+---------+------+---------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE stok<>5;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE harga >= 1000000 OR stok >=5;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
++----+-------+-----------------------+---------+------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE kode = 'KL001';
++----+-------+--------------------+---------+------+---------+------------+
+| id | kode  | nama               | harga   | stok | idjenis | foto       |
++----+-------+--------------------+---------+------+---------+------------+
+|  1 | KL001 | Kulkas LG 14 Pintu | 7000000 |    2 |       1 | Kulkas.jpg |
++----+-------+--------------------+---------+------+---------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE kode IN ('KL001','ES001');
++----+-------+--------------------+---------+------+---------+------------+
+| id | kode  | nama               | harga   | stok | idjenis | foto       |
++----+-------+--------------------+---------+------+---------+------------+
+|  7 | ES001 | Es Te Manis        |   50000 |    5 |       4 | esteh.jpg  |
+|  1 | KL001 | Kulkas LG 14 Pintu | 7000000 |    2 |       1 | Kulkas.jpg |
++----+-------+--------------------+---------+------+---------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE kode NOT IN ('KL001','ES001');
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT *FROM barang ORDER BY nama ASc;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]>  SELECT *FROM barang ORDER BY nama ASC;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT *FROM barang ORDER BY nama DESC;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]>  SELECT * FROM barang WHERE harga >= 1000000;
++----+-------+-----------------------+---------+------+---------+------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto       |
++----+-------+-----------------------+---------+------+---------+------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg   |
++----+-------+-----------------------+---------+------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE harga >= 1000000 ORDER BY nama DESC;
++----+-------+-----------------------+---------+------+---------+------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto       |
++----+-------+-----------------------+---------+------+---------+------------+
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg   |
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg |
++----+-------+-----------------------+---------+------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbti08]> Bye
+
+irham@DESKTOP-2AJMV4K c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 13
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SELECT * FROM barang;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> USE dbti08;
+Database changed
+MariaDB [dbti08]> SELECT * FROM barang;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  1 | KL001 | Kulkas LG 14 Pintu    | 7000000 |    2 |       1 | Kulkas.jpg  |
+|  2 | LM002 | Lemari Baju           | 1000000 |    5 |       2 | Lemari.jpg  |
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
+|  6 | SB001 | Seblak                |   15000 |    2 |       4 | seblak.jpg  |
+|  7 | ES001 | Es Te Manis           |   50000 |    5 |       4 | esteh.jpg   |
++----+-------+-----------------------+---------+------+---------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang LIMIT 2;
++----+-------+--------------------+---------+------+---------+------------+
+| id | kode  | nama               | harga   | stok | idjenis | foto       |
++----+-------+--------------------+---------+------+---------+------------+
+|  1 | KL001 | Kulkas LG 14 Pintu | 7000000 |    2 |       1 | Kulkas.jpg |
+|  2 | LM002 | Lemari Baju        | 1000000 |    5 |       2 | Lemari.jpg |
++----+-------+--------------------+---------+------+---------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang LIMIT 2 OFFSET 2;
++----+-------+-----------------------+---------+------+---------+-------------+
+| id | kode  | nama                  | harga   | stok | idjenis | foto        |
++----+-------+-----------------------+---------+------+---------+-------------+
+|  3 | LP001 | Laptop Lenovo 10 Inch | 4000000 | 2000 |       4 | asus.jpg    |
+|  4 | BS008 | Basreng               |   10000 |  100 |       3 | basreng.jpg |
++----+-------+-----------------------+---------+------+---------+-------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT COUNT(harga) AS jumlah_barang FROM barang;
++---------------+
+| jumlah_barang |
++---------------+
+|             6 |
++---------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT COUNT(*) AS jumlah_barang FROM barang;
++---------------+
+| jumlah_barang |
++---------------+
+|             6 |
++---------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT COUNT(*) FROM barang;
++----------+
+| COUNT(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT MAX(harga) AS barang_termurah FROM barang;
++-----------------+
+| barang_termurah |
++-----------------+
+|         7000000 |
++-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT MIN(harga) AS barang_termurah FROM barang;
++-----------------+
+| barang_termurah |
++-----------------+
+|           10000 |
++-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT AVG(harga) AS rata2 FROM barang;
++---------+
+| rata2   |
++---------+
+| 2012500 |
++---------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT SUM(harga) AS total_harga FROM barang;
++-------------+
+| total_harga |
++-------------+
+|    12075000 |
++-------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT SUM(harga) AS total_harga, MAX(harga) AS harga_termahal, MIN(harga) AS harga_termurah FROM barang;
++-------------+----------------+----------------+
+| total_harga | harga_termahal | harga_termurah |
++-------------+----------------+----------------+
+|    12075000 |        7000000 |          10000 |
++-------------+----------------+----------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]>
